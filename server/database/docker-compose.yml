@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: colombiaprr
+    ports:
+      - "3306:3306"
+
+# docker-compose up -d para iniciar crear e iniciar el contenedor
