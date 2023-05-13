@@ -14,6 +14,21 @@ export const getProductos = async (req, res) => {
 };
 
 //Obtener un Producto
+export const getSearchProducto = async (req, res) => {
+  try {
+    const { search } = req.params;
+    const [result] = await pool.query(
+      `SELECT * FROM productos WHERE nombre like '%${search}%' ORDER BY created_at ASC`
+    );
+    if (result.length === 0)
+      return res.status(404).json({ Error: "Producto no encontrado" });
+    res.json(result);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+//Obtener un Producto
 export const getProducto = async (req, res) => {
   try {
     const { id } = req.params;
@@ -28,14 +43,15 @@ export const getProducto = async (req, res) => {
   }
 };
 
+
 //Crear un Producto
 export const addProducto = async (req, res) => {
   try {
-    const { nombre, descripcion, precio, cantidad, categoria } = req.body;
+    const { nombre, url_img, descripcion, precio, cantidad, categoria } = req.body;
 
     const [result] = await pool.query(
-      "INSERT INTO productos(nombre, descripcion) VALUES (?,?,?,?,?)",
-      [nombre, descripcion, precio, cantidad, categoria]
+      "INSERT INTO productos(nombre, descripcion) VALUES (?,?,?,?,?,?)",
+      [nombre, url_img, descripcion, precio, cantidad, categoria]
     );
 
     res.status(200).json({ id: result.insertId, body: req.body });

@@ -57,3 +57,15 @@ export const bodyAddCaterogiaValidator = [
   // esto hará que se ejecute la función de arriba para retornar el error
   validationResultExpress,
 ];
+
+export const bodyAddProductoValidator = [
+  //estos son metodos que se utilizan antes de que llegue al agregar user es decir al controlador
+  body("nombre", "El campo nombre no cumple con el formato")
+    .trim()
+    .isLength({ min: 3 }),
+  body("nombre", "El campo descripcion no cumple con el formato")
+    .trim()
+    .isLength({ min: 10 }),
+  // esto hará que se ejecute la función de arriba para retornar el error
+  validationResultExpress,
+];

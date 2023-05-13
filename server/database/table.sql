@@ -26,6 +26,7 @@ CREATE TABLE categorias (
 CREATE TABLE productos (
     id INT NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(255) NOT NULL,
+    url_img VARCHAR(255) NOT NULL,
     descripcion VARCHAR(255),
     precio INT NOT NULL,
     cantidad INT NOT NULL,
@@ -53,6 +54,7 @@ INSERT INTO categorias (nombre, descripcion) VALUES
 ('Moda', 'Ropa y accesorios de moda para todas las edades'),
 ('Deportes', 'Equipos y accesorios para deportes'),
 ('Mascotas', 'Productos para el cuidado y alimentación de mascotas');
+
 --Productos de prueba
 INSERT INTO productos (nombre, descripcion, precio, cantidad, categoria_id) VALUES
 ('Cuaderno universitario', 'Cuaderno tamaño carta de 100 hojas', 30000, 50, 1),

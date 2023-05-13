@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   getProducto,
   getProductos,
+  getSearchProducto,
   addProducto,
   updateProducto,
   deleteProducto,
@@ -12,9 +13,11 @@ import { requireToken } from "../middlewares/requireToken.js";
 
 const router = Router();
 
-router.get("/producto", getProducto);
+router.get("/producto", getProductos);
 
-router.get("/producto/:id", requireToken, getProductos);
+router.get("/producto/:id", requireToken, getProducto);
+
+router.get("/producto/search/:search", getSearchProducto);
 
 router.post("/producto", bodyAddProductoValidator, addProducto);
 

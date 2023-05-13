@@ -5,6 +5,7 @@ import "dotenv/config";
 import { PORT } from "./utils/config.js";
 import userRoutes from "./routes/user.route.js";
 import categoriaRoute from "./routes/categoria.route.js";
+import productoRoute from "./routes/producto.route.js";
 import authRoutes from "./routes/auth.route.js";
 
 
@@ -15,6 +16,7 @@ app.use(cookieParser());
 
 app.use("/api/", userRoutes);
 app.use("/api/", authRoutes);
+app.use("/api/", productoRoute);
 app.use("/api/", categoriaRoute);
 
 
