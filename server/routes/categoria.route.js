@@ -7,21 +7,21 @@ import {
   deleteCategoria,
   releaseCategoria,
 } from "../controllers/categoria.controller.js";
-import { bodyAddCaterogiaValidator } from "../middlewares/validatorManager.js";
+import { bodyAddCategoriaValidator } from "../middlewares/validatorManager.js";
 import { requireToken } from "../middlewares/requireToken.js";
 
 const router = Router();
 
-router.get("/caterogia", getCategoria);
+router.get("/categoria", getCategorias);
 
-router.get("/caterogia/:id", requireToken, getCategorias);
+router.get("/categoria/:id", requireToken, getCategoria);
 
-router.post("/caterogia", bodyAddCaterogiaValidator, addCategoria);
+router.post("/categoria", bodyAddCategoriaValidator, addCategoria);
 
-router.put("/caterogia/:id", updateCategoria);
+router.put("/categoria/:id", updateCategoria);
 
-router.delete("/caterogia/:id", deleteCategoria);
+router.delete("/categoria/:id", deleteCategoria);
 
-router.patch("/caterogia/:id", releaseCategoria);
+router.patch("/categoria/:id", releaseCategoria);
 
 export default router;

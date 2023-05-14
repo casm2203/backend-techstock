@@ -46,7 +46,7 @@ export const bodyLoginValidator = [
   validationResultExpress,
 ];
 
-export const bodyAddCaterogiaValidator = [
+export const bodyAddCategoriaValidator = [
   //estos son metodos que se utilizan antes de que llegue al agregar user es decir al controlador
   body("nombre", "El campo nombre no cumple con el formato")
     .trim()
