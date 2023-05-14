@@ -56,25 +56,23 @@ INSERT INTO categorias (nombre, descripcion) VALUES
 ('Mascotas', 'Productos para el cuidado y alimentación de mascotas');
 
 --Productos de prueba
-INSERT INTO productos (nombre, descripcion, precio, cantidad, categoria_id) VALUES
-('Cuaderno universitario', 'Cuaderno tamaño carta de 100 hojas', 30000, 50, 1),
-('Lápices de colores', 'Juego de 12 lápices de colores', 50000, 20, 1),
-('Agenda diaria', 'Agenda para llevar un registro diario', 40000, 30, 1),
-('Bolígrafo de tinta gel', 'Bolígrafo con tinta gel de color negro', 5000, 100, 1),
-('Marcadores fluorescentes', 'Juego de 6 marcadores de diferentes colores', 8000, 30, 1),
-('Calculadora científica', 'Calculadora con funciones científicas', 100000, 10, 1),
-('Papel de colores', 'Paquete de 100 hojas de papel de colores surtidos', 15000, 40, 1),
-('Grapadora metálica', 'Grapadora metálica de uso rudo', 21000, 15, 1),
-('Resaltador de texto', 'Resaltador de color amarillo', 4000, 200, 1),
-('Libreta de apuntes', 'Libreta tamaño media carta de 80 hojas', 18000, 50, 1),
-('Smart TV', 'Televisor inteligente con pantalla de 55 pulgadas', 600000, 10, 2),
-('Zapatos deportivos', 'Zapatos para correr con suela de gel', 350000, 20, 5),
-('Trapero', 'Trapero de microfibra', 20000, 5, 3),
-('Raqueta de tenis', 'Raqueta profesional de tenis', 550000, 15, 5),
-('Comedero automático para mascotas', 'Comedero programable para perros y gatos', 250000, 50, 6),
-('Auriculares inalámbricos', 'Auriculares inalámbricos con cancelación de ruido', 80000, 10, 2),
-('Freidora de aire', 'Freidora Imusa de 4.1L', 350000, 10, 3),
-('Set de utensilios de cocina', 'Set de 10 utensilios de cocina de acero inoxidable', 125000, 20, 3),
-('Balón de fútbol', 'Balón oficial de la FIFA', 100000, 30, 5),
-('Cama para mascotas', 'Cama ortopédica para perros y gatos', 200000, 25, 56;
-;
+INSERT INTO productos (nombre,url_img, descripcion, precio, cantidad, categoria_id) VALUES
+('Cuaderno universitario', 'https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Cuaderno tamaño carta de 100 hojas', 30000, 50, 1),
+('Lápices de colores', 'https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Juego de 12 lápices de colores', 50000, 20, 1),
+('Agenda diaria', 'https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Agenda para llevar un registro diario', 40000, 30, 1),
+('Bolígrafo de tinta gel', 'https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Bolígrafo con tinta gel de color negro', 5000, 100, 1),
+('Marcadores fluorescentes', 'https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Juego de 6 marcadores de diferentes colores', 8000, 30, 1),
+('Calculadora científica', 'https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Calculadora con funciones científicas', 100000, 10, 1),
+('Papel de colores','https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Paquete de 100 hojas de papel de colores surtidos', 15000, 40, 1),
+('Grapadora metálica','https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Grapadora metálica de uso rudo', 21000, 15, 1),
+('Resaltador de texto','https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Resaltador de color amarillo', 4000, 200, 1),
+('Libreta de apuntes','https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Libreta tamaño media carta de 80 hojas', 18000, 50, 1),
+('Smart TV','https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Televisor inteligente con pantalla de 55 pulgadas', 600000, 10, 2),
+('Zapatos deportivos','https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Zapatos para correr con suela de gel', 350000, 20, 5),
+('Trapero','https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Trapero de microfibra', 20000, 5, 3),
+('Raqueta de tenis','https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Raqueta profesional de tenis', 550000, 15, 5),
+('Comedero automático para mascotas','https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Comedero programable para perros y gatos', 250000, 50, 6),
+('Auriculares inalámbricos','https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Auriculares inalámbricos con cancelación de ruido', 80000, 10, 2),
+('Freidora de aire','https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Freidora Imusa de 4.1L', 350000, 10, 3),
+('Set de utensilios de cocina','https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Set de 10 utensilios de cocina de acero inoxidable', 125000, 20, 3),
+('Balón de fútbol','https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Balón oficial de la FIFA', 100000, 30, 5);

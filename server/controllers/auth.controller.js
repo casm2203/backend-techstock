@@ -10,7 +10,7 @@ export const login = async (req, res) => {
     const [result] = await pool.query(
       `SELECT * FROM usuarios WHERE email = '${email}' and deleted = 0`
     );
-    
+
     if (result.length === 0)
       return res.status(404).json({ Error: "Usuario no encontrado" });
 
@@ -33,7 +33,7 @@ export const login = async (req, res) => {
       httpOnly: true,
       secure: !(process.env.MODO === "developer"),
     });
-    return res.json({ token, expiresIn });
+    return res.json({ token, expiresIn, user: result[0] });
   } catch (error) {
     console.log(error);
 
