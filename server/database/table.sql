@@ -38,6 +38,25 @@ CREATE TABLE productos (
     FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE CASCADE
 );
 
+-- Crear tabla detalle_venta
+CREATE TABLE ventas (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  total_venta INT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear tabla venta
+CREATE TABLE detalle_venta (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  venta_id INT NOT NULL,
+  cantidad INT NOT NULL,
+  producto_id INT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (venta_id) REFERENCES ventas(id),
+  FOREIGN KEY (producto_id) REFERENCES productos(id)
+);
+
+
 -- Usuarios de prueba password 123456
 INSERT INTO usuarios (nombre, email, password)
 VALUES
@@ -76,3 +95,18 @@ INSERT INTO productos (nombre,url_img, descripcion, precio, cantidad, categoria_
 ('Freidora de aire','https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Freidora Imusa de 4.1L', 350000, 10, 3),
 ('Set de utensilios de cocina','https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Set de 10 utensilios de cocina de acero inoxidable', 125000, 20, 3),
 ('Balón de fútbol','https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Balón oficial de la FIFA', 100000, 30, 5);
+
+-- Insertar datos en la tabla "ventas"
+INSERT INTO ventas (created_at, total) VALUES ('2023-05-17 10:30:00', 50000);
+INSERT INTO ventas (created_at, total) VALUES ('2023-05-16 15:45:00', 70000);
+
+-- Insertar datos en la tabla "detalle_venta"
+INSERT INTO detalle_venta (venta_id, cantidad, producto_id, fecha) VALUES (1, 3, 1, '2023-05-17 10:30:00');
+INSERT INTO detalle_venta (venta_id, cantidad, producto_id, fecha) VALUES (1, 2, 2, '2023-05-17 10:30:00');
+INSERT INTO detalle_venta (venta_id, cantidad, producto_id, fecha) VALUES (1, 7, 3, '2023-05-17 10:30:00');
+INSERT INTO detalle_venta (venta_id, cantidad, producto_id, fecha) VALUES (1, 3, 4, '2023-05-17 10:30:00');
+INSERT INTO detalle_venta (venta_id, cantidad, producto_id, fecha) VALUES (1, 4, 5, '2023-05-17 10:30:00');
+INSERT INTO detalle_venta (venta_id, cantidad, producto_id, fecha) VALUES (2, 3, 6, '2023-05-16 15:45:00');
+INSERT INTO detalle_venta (venta_id, cantidad, producto_id, fecha) VALUES (2, 2, 5, '2023-05-16 15:45:00');
+INSERT INTO detalle_venta (venta_id, cantidad, producto_id, fecha) VALUES (2, 1, 9, '2023-05-16 15:45:00');
+INSERT INTO detalle_venta (venta_id, cantidad, producto_id, fecha) VALUES (2, 6, 8, '2023-05-16 15:45:00');

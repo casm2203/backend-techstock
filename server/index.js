@@ -6,6 +6,7 @@ import { PORT } from "./utils/config.js";
 import userRoutes from "./routes/user.route.js";
 import categoriaRoute from "./routes/categoria.route.js";
 import productoRoute from "./routes/producto.route.js";
+import ventaRoutes from "./routes/venta.route.js";
 import authRoutes from "./routes/auth.route.js";
 
 
@@ -16,6 +17,7 @@ app.use(cookieParser());
 
 app.use("/api/", userRoutes);
 app.use("/api/", authRoutes);
+app.use("/api/", ventaRoutes);
 app.use("/api/", productoRoute);
 app.use("/api/", categoriaRoute);
 
