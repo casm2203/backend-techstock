@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
   getVenta,
-  getVentas,
+  getVentasDashboard,
   getSearchVenta,
   addVenta
 } from "../controllers/venta.controller.js";
@@ -9,7 +9,7 @@ import { requireToken } from "../middlewares/requireToken.js";
 
 const router = Router();
 
-router.get("/venta", getVentas);
+router.get("/venta", getVentasDashboard);
 
 router.get("/venta/:id", requireToken, getVenta);
 

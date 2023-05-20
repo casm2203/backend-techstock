@@ -1,4 +1,6 @@
 import { pool } from "../database/db.js";
+import moment from "moment";
+const fechaColombia = moment().format("YYYY-MM-DD HH:mm:ss");
 
 //Obtener todos los categorias
 export const getCategorias = async (req, res) => {
@@ -34,8 +36,8 @@ export const addCategoria = async (req, res) => {
     const { nombre, descripcion } = req.body;
 
     const [result] = await pool.query(
-      "INSERT INTO categorias(nombre, descripcion) VALUES (?,?)",
-      [nombre, descripcion]
+      "INSERT INTO categorias(nombre, descripcion, created_at) VALUES (?,?,?)",
+      [nombre, descripcion, fechaColombia]
     );
 
     res.status(200).json({ id: result.insertId, body: req.body });
@@ -49,10 +51,10 @@ export const updateCategoria = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const [result] = await pool.query("UPDATE categorias SET ? WHERE id = ?", [
-      req.body,
-      id,
-    ]);
+    const [result] = await pool.query(
+      "UPDATE categorias SET ?, updated_at = ? WHERE id = ?",
+      [req.body, fechaColombia, id]
+    );
 
     res.status(200).json({ ok: "Se ha Actualizado la Categoria", id, result });
   } catch (error) {
@@ -65,8 +67,8 @@ export const deleteCategoria = async (req, res) => {
   try {
     const { id } = req.params;
     const [result] = await pool.query(
-      "UPDATE categorias SET deleted = ? WHERE id = ?",
-      [1, id]
+      "UPDATE categorias SET deleted = ?, updated_at = ? WHERE id = ?",
+      [1, fechaColombia, id]
     );
 
     if (result.affectedRows === 0) {
@@ -84,8 +86,8 @@ export const releaseCategoria = async (req, res) => {
     const { id } = req.params;
 
     const [result] = await pool.query(
-      "UPDATE categorias SET deleted = ? WHERE id = ?",
-      [0, id]
+      "UPDATE categorias SET deleted = ?, updated_at = ?  WHERE id = ?",
+      [0, fechaColombia, id]
     );
 
     if (result.affectedRows === 0) {

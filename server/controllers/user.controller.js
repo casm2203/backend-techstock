@@ -1,6 +1,6 @@
 import { pool } from "../database/db.js";
 import bcryptjs from "bcryptjs";
-
+import moment from "moment";
 
 //Obtener todos los usuarios
 export const getUsers = async (req, res) => {
@@ -8,7 +8,7 @@ export const getUsers = async (req, res) => {
     const [result] = await pool.query(
       "SELECT * FROM usuarios Where deleted = 0 ORDER BY created_at ASC"
     );
-    
+
     res.json({ result });
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -34,7 +34,7 @@ export const getUser = async (req, res) => {
 export const addUser = async (req, res) => {
   try {
     const { nombre, email, password, repassword } = req.body;
-
+    const fechaColombia = moment().format("YYYY-MM-DD HH:mm:ss");
     if (password !== repassword) {
       return res.status(403).json({
         error: "Contraseña incorrecta",
@@ -47,8 +47,8 @@ export const addUser = async (req, res) => {
     let passwordEncrypted = await bcryptjs.hash(password, salt);
 
     const [result] = await pool.query(
-      "INSERT INTO usuarios(nombre, email, password) VALUES (?,?,?)",
-      [nombre, email, passwordEncrypted]
+      "INSERT INTO usuarios(nombre, email, password, created_at) VALUES (?,?,?,?)",
+      [nombre, email, passwordEncrypted, fechaColombia]
     );
 
     res.status(200).json({ id: result.insertId, body: req.body });
@@ -62,10 +62,10 @@ export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const [result] = await pool.query("UPDATE usuarios SET ? WHERE id = ?", [
-      req.body,
-      id,
-    ]);
+    const [result] = await pool.query(
+      "UPDATE usuarios SET ?, updated_at = ? WHERE id = ?",
+      [req.body, fechaColombia, id]
+    );
 
     res.status(200).json({ ok: "Se ha Actualizado el usuario", id, result });
   } catch (error) {
@@ -77,9 +77,10 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
+    const fechaColombia = moment().format("YYYY-MM-DD HH:mm:ss");
     const [result] = await pool.query(
-      "UPDATE usuarios SET deleted = ? WHERE id = ?",
-      [1, id]
+      "UPDATE usuarios SET deleted = ?, updated_at = ? WHERE id = ?",
+      [1, fechaColombia, id]
     );
 
     if (result.affectedRows === 0) {
@@ -95,10 +96,10 @@ export const deleteUser = async (req, res) => {
 export const releaseUser = async (req, res) => {
   try {
     const { id } = req.params;
-
+    const fechaColombia = moment().format("YYYY-MM-DD HH:mm:ss");
     const [result] = await pool.query(
-      "UPDATE usuarios SET deleted = ? WHERE id = ?",
-      [0, id]
+      "UPDATE usuarios SET deleted = ?, updated_at = ? WHERE id = ?",
+      [0, fechaColombia, id]
     );
 
     if (result.affectedRows === 0) {

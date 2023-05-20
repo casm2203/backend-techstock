@@ -1,4 +1,6 @@
 import { pool } from "../database/db.js";
+import moment from "moment";
+const fechaColombia = moment().format("YYYY-MM-DD HH:mm:ss");
 
 //Obtener todos los productos
 export const getProductos = async (req, res) => {
@@ -43,15 +45,15 @@ export const getProducto = async (req, res) => {
   }
 };
 
-
 //Crear un Producto
 export const addProducto = async (req, res) => {
   try {
-    const { nombre, url_img, descripcion, precio, cantidad, categoria } = req.body;
+    const { nombre, url_img, descripcion, precio, cantidad, categoria } =
+      req.body;
 
     const [result] = await pool.query(
-      "INSERT INTO productos(nombre, descripcion) VALUES (?,?,?,?,?,?)",
-      [nombre, url_img, descripcion, precio, cantidad, categoria]
+      "INSERT INTO productos(nombre, url_img, descripcion, precio, cantidad, categoria, created_at) VALUES (?,?,?,?,?,?,?)",
+      [nombre, url_img, descripcion, precio, cantidad, categoria, fechaColombia]
     );
 
     res.status(200).json({ id: result.insertId, body: req.body });
@@ -65,10 +67,10 @@ export const updateProducto = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const [result] = await pool.query("UPDATE productos SET ? WHERE id = ?", [
-      req.body,
-      id,
-    ]);
+    const [result] = await pool.query(
+      "UPDATE productos SET ?, updated_at = ? WHERE id = ?",
+      [req.body, fechaColombia, id]
+    );
 
     res.status(200).json({ ok: "Se ha Actualizado el Producto", id, result });
   } catch (error) {
@@ -81,8 +83,8 @@ export const deleteProducto = async (req, res) => {
   try {
     const { id } = req.params;
     const [result] = await pool.query(
-      "UPDATE productos SET deleted = ? WHERE id = ?",
-      [1, id]
+      "UPDATE productos SET deleted = ?, updated_at = ? WHERE id = ?",
+      [1, fechaColombia, id]
     );
 
     if (result.affectedRows === 0) {
@@ -100,8 +102,8 @@ export const releaseProducto = async (req, res) => {
     const { id } = req.params;
 
     const [result] = await pool.query(
-      "UPDATE productos SET deleted = ? WHERE id = ?",
-      [0, id]
+      "UPDATE productos SET deleted = ?, updated_at = ?  WHERE id = ?",
+      [0, fechaColombia, id]
     );
 
     if (result.affectedRows === 0) {

@@ -1,7 +1,8 @@
 import { pool } from "../database/db.js";
+import moment from "moment";
 
 //Obtener todos los ventas
-export const getVentas = async (req, res) => {
+export const getVentasDashboard = async (req, res) => {
   try {
     const [result] = await pool.query(
       "SELECT * FROM ventas ORDER BY created_at ASC"
@@ -46,11 +47,15 @@ export const getVenta = async (req, res) => {
 //Crear una Venta
 export const addVenta = async (req, res) => {
   try {
+    // Configurar la zona horaria de Colombia
+    const fechaColombia = moment().format("YYYY-MM-DD HH:mm:ss");
+
+    console.log(fechaColombia);
     const { total, productos } = req.body;
 
     const [result] = await pool.query(
-      "INSERT INTO ventas (total_venta) VALUES (?)",
-      [total]
+      "INSERT INTO ventas (total_venta, created_at) VALUES (?,?)",
+      [total, fechaColombia]
     );
 
     let idVenta = result.insertId;
@@ -58,36 +63,20 @@ export const addVenta = async (req, res) => {
     for await (const producto of productos) {
       const { id, cantidad } = producto;
 
-      // Insertar detalle de venta
+      //Insertar detalle de venta
       const [detalleVenta] = await pool.query(
-        "INSERT INTO detalle_venta(venta_id, producto_id, cantidad) VALUES (?,?,?)",
-        [idVenta, id, cantidad]
+        "INSERT INTO detalle_venta(venta_id, producto_id, cantidad, created_at) VALUES (?,?,?,?)",
+        [idVenta, id, cantidad, fechaColombia]
       );
 
-      // Actualizar cantidad del producto en la tabla de productos
+      //Actualizar cantidad del producto en la tabla de productos
       const [actualizarProducto] = await pool.query(
-        "UPDATE productos SET cantidad = cantidad - ? WHERE id = ?",
-        [cantidad, id]
+        "UPDATE productos SET cantidad = cantidad - ?, updated_at = ? WHERE id = ?",
+        [cantidad, fechaColombia, id]
       );
     }
 
     res.status(200).json({ idVenta, message: "Venta registrada con exito." });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-};
-
-//Actualizar un Producto
-export const updateProducto = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const [result] = await pool.query("UPDATE productos SET ? WHERE id = ?", [
-      req.body,
-      id,
-    ]);
-
-    res.status(200).json({ ok: "Se ha Actualizado el Producto", id, result });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
