@@ -48,12 +48,12 @@ export const getProducto = async (req, res) => {
 //Crear un Producto
 export const addProducto = async (req, res) => {
   try {
-    const { nombre, url_img, descripcion, precio, cantidad, categoria } =
+    const { nombre, url_img, descripcion, precio, cantidad, categoria_id } =
       req.body;
 
     const [result] = await pool.query(
-      "INSERT INTO productos(nombre, url_img, descripcion, precio, cantidad, categoria, created_at) VALUES (?,?,?,?,?,?,?)",
-      [nombre, url_img, descripcion, precio, cantidad, categoria, fechaColombia]
+      "INSERT INTO productos(nombre, url_img, descripcion, precio, cantidad, categoria_id, created_at) VALUES (?,?,?,?,?,?,?)",
+      [nombre, url_img, descripcion, precio, cantidad, categoria_id, fechaColombia]
     );
 
     res.status(200).json({ id: result.insertId, body: req.body });

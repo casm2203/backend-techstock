@@ -1,11 +1,34 @@
 import { pool } from "../database/db.js";
 import moment from "moment";
+let week_from = moment().startOf("week").format("YYYY-MM-DD");
+let week_to = moment().endOf("week").format("YYYY-MM-DD");
+let day_from = moment().startOf("day").format("YYYY-MM-DD HH:mm:ss");
+let day_to = moment().endOf("day").format("YYYY-MM-DD HH:mm:ss");
 
-//Obtener todos los ventas
-export const getVentasDashboard = async (req, res) => {
+//Obtener todos los ventas diarias
+export const getVentasDashboardDay = async (req, res) => {
   try {
     const [result] = await pool.query(
-      "SELECT * FROM ventas ORDER BY created_at ASC"
+      `SELECT DATE(created_at) AS fecha_venta, SUM(total_venta) AS total_ventas
+      FROM ventas
+      WHERE created_at BETWEEN '${day_from}' and '${day_to}' 
+      GROUP BY DATE(created_at)`
+    );
+
+    res.json(result[0]);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+//Obtener todos los ventas semanales
+export const getVentasDashboardWeek = async (req, res) => {
+  try {
+    const [result] = await pool.query(
+      `SELECT DATE(created_at) AS fecha_venta, SUM(total_venta) AS total_ventas
+      FROM ventas
+      WHERE created_at BETWEEN '${week_from}' and '${week_to}' 
+      GROUP BY DATE(created_at)`
     );
 
     res.json({ result });
