@@ -38,14 +38,14 @@ CREATE TABLE productos (
     FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE CASCADE
 );
 
--- Crear tabla detalle_venta
+-- Crear tabla venta
 CREATE TABLE ventas (
   id INT AUTO_INCREMENT PRIMARY KEY,
   total_venta INT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- Crear tabla venta
+-- Crear tabla detalle venta
 CREATE TABLE detalle_venta (
   id INT AUTO_INCREMENT PRIMARY KEY,
   venta_id INT NOT NULL,

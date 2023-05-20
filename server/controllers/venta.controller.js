@@ -48,41 +48,26 @@ export const addVenta = async (req, res) => {
   try {
     const { total, productos } = req.body;
 
-    const [result] = await pool.query("INSERT INTO ventas (total) VALUES (?)", [
-      total,
-    ]);
+    const [result] = await pool.query(
+      "INSERT INTO ventas (total_venta) VALUES (?)",
+      [total]
+    );
 
-    idVenta = result.insertId;
+    let idVenta = result.insertId;
 
-    for (const producto of productos) {
+    for await (const producto of productos) {
       const { id, cantidad } = producto;
-
-      // Obtener el precio y la cantidad actual del producto desde la tabla de productos
-      const [result] = await pool.query(
-        `SELECT * FROM ventas WHERE id = ${id} ORDER BY created_at ASC`
-      );
-      const { cantidadActual } = result[0];
-
-      // Validar disponibilidad de stock
-      if (cantidad > cantidadActual) {
-        throw new Error(
-          `No hay suficiente stock para el producto con ID ${id}`
-        );
-      }
-
-      // Calcular el subtotal del producto y actualizar la cantidad en la tabla de productos
-      const nuevaCantidad = cantidadActual - cantidad;
 
       // Insertar detalle de venta
       const [detalleVenta] = await pool.query(
-        "INSERT INTO productos(nombre, descripcion) VALUES (?,?,?)",
-        [ventaId, id, cantidad]
+        "INSERT INTO detalle_venta(venta_id, producto_id, cantidad) VALUES (?,?,?)",
+        [idVenta, id, cantidad]
       );
 
       // Actualizar cantidad del producto en la tabla de productos
       const [actualizarProducto] = await pool.query(
-        "UPDATE productos SET ? WHERE id = ?",
-        [nuevaCantidad, id]
+        "UPDATE productos SET cantidad = cantidad - ? WHERE id = ?",
+        [cantidad, id]
       );
     }
 
