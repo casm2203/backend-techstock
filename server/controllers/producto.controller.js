@@ -20,7 +20,7 @@ export const getSearchProducto = async (req, res) => {
   try {
     const { search } = req.params;
     const [result] = await pool.query(
-      `SELECT * FROM productos WHERE nombre like '%${search}%' ORDER BY created_at ASC`
+      `SELECT * FROM productos WHERE nombre like '%${search}%' and deleted = 0 ORDER BY created_at ASC`
     );
     if (result.length === 0)
       return res.status(404).json({ Error: "Producto no encontrado" });
