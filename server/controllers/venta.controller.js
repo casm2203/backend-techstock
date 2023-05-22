@@ -52,6 +52,51 @@ export const getSearchVenta = async (req, res) => {
   }
 };
 
+//Buscar un Producto
+export const getHistoryVentas = async (req, res) => {
+  try {
+    const [ventasRows] = await pool.query(
+      `SELECT * FROM ventas ORDER BY created_at ASC`
+    );
+
+    if (ventasRows.length === 0) { return res.status(404).json({ Error: "No hay ventas" }) };
+
+    const historialVentas = [];
+
+    for (const ventaRow of ventasRows) {
+      const venta = {
+        id: ventaRow.id,
+        created_at: ventaRow.created_at,
+        total_venta: ventaRow.total_venta,
+        detalles: []
+      };
+
+      // Consultar los detalles de la venta desde la tabla "detalle_venta"
+      const [detallesRows] = await pool.query(`SELECT detalle_venta.producto_id, detalle_venta.cantidad, productos.nombre, productos.url_img, productos.precio FROM detalle_venta inner join productos on productos.id = detalle_venta.producto_id WHERE venta_id = ${venta.id}`);
+
+      // Agregar cada detalle de la venta al array de detalles
+      for (const detalleRow of detallesRows) {
+        const detalleVenta = {
+          producto_id: detalleRow.producto_id,
+          cantidad: detalleRow.cantidad,
+          nombre: detalleRow.nombre,
+          url_img: detalleRow.url_img,
+          precio: detalleRow.precio,
+        };
+
+        venta.detalles.push(detalleVenta);
+      }
+
+      historialVentas.push(venta);
+    }
+
+
+    res.status(200).json({historialVentas});
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 //Obtener una Venta
 export const getVenta = async (req, res) => {
   try {

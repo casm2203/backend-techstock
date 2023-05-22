@@ -63,9 +63,9 @@ export const bodyAddProductoValidator = [
   body("nombre", "El campo nombre no cumple con el formato")
     .trim()
     .isLength({ min: 3 }),
-  body("nombre", "El campo descripcion no cumple con el formato")
+  body("descripcion", "El campo descripcion no cumple con el formato")
     .trim()
-    .isLength({ min: 10 }),
+    .isLength({ min: 5 }),
   // esto hará que se ejecute la función de arriba para retornar el error
   validationResultExpress,
 ];

@@ -58,12 +58,10 @@ CREATE TABLE detalle_venta (
 
 
 -- Usuarios de prueba password 123456
-INSERT INTO usuarios (nombre, email, password)
-VALUES
-    ('Usuario 2', 'usuario2@example.com', '$2a$10$ljOvJWbBA.BLvAMbJ05lS../3OqrVlC9AYJDElR2eAvteM6O6UkFq'),
-    ('Usuario 3', 'usuario3@example.com', '$2a$10$ljOvJWbBA.BLvAMbJ05lS../3OqrVlC9AYJDElR2eAvteM6O6UkFq'),
-    ('Usuario 4', 'usuario4@example.com', '$2a$10$ljOvJWbBA.BLvAMbJ05lS../3OqrVlC9AYJDElR2eAvteM6O6UkFq'),
-    ('Usuario 5', 'usuario5@example.com', '$2a$10$ljOvJWbBA.BLvAMbJ05lS../3OqrVlC9AYJDElR2eAvteM6O6UkFq');
+INSERT INTO usuarios (nombre, email, password) VALUES
+('cristian', 'cristian@example.com', '$2a$10$ljOvJWbBA.BLvAMbJ05lS../3OqrVlC9AYJDElR2eAvteM6O6UkFq'),
+('andres', 'andres@example.com', '$2a$10$ljOvJWbBA.BLvAMbJ05lS../3OqrVlC9AYJDElR2eAvteM6O6UkFq'),
+('steven', 'steven@example.com', '$2a$10$ljOvJWbBA.BLvAMbJ05lS../3OqrVlC9AYJDElR2eAvteM6O6UkFq');
 
 --Categorias de prueba
 INSERT INTO categorias (nombre, descripcion) VALUES 
@@ -72,6 +70,7 @@ INSERT INTO categorias (nombre, descripcion) VALUES
 ('Hogar', 'Artículos para el hogar y la decoración'),
 ('Moda', 'Ropa y accesorios de moda para todas las edades'),
 ('Deportes', 'Equipos y accesorios para deportes'),
+('Jugueteria', 'Articulos para el entrenimiento de los niños'),
 ('Mascotas', 'Productos para el cuidado y alimentación de mascotas');
 
 --Productos de prueba
@@ -97,16 +96,16 @@ INSERT INTO productos (nombre,url_img, descripcion, precio, cantidad, categoria_
 ('Balón de fútbol','https://howtodrawforkids.com/wp-content/uploads/2022/07/how-to-draw-an-open-book.jpg', 'Balón oficial de la FIFA', 100000, 30, 5);
 
 -- Insertar datos en la tabla "ventas"
-INSERT INTO ventas (created_at, total) VALUES ('2023-05-17 10:30:00', 50000);
-INSERT INTO ventas (created_at, total) VALUES ('2023-05-16 15:45:00', 70000);
+INSERT INTO ventas (created_at, total_venta) VALUES ('2023-05-17 10:30:00', 50000);
+INSERT INTO ventas (created_at, total_venta) VALUES ('2023-05-16 15:45:00', 70000);
 
 -- Insertar datos en la tabla "detalle_venta"
-INSERT INTO detalle_venta (venta_id, cantidad, producto_id, fecha) VALUES (1, 3, 1, '2023-05-17 10:30:00');
-INSERT INTO detalle_venta (venta_id, cantidad, producto_id, fecha) VALUES (1, 2, 2, '2023-05-17 10:30:00');
-INSERT INTO detalle_venta (venta_id, cantidad, producto_id, fecha) VALUES (1, 7, 3, '2023-05-17 10:30:00');
-INSERT INTO detalle_venta (venta_id, cantidad, producto_id, fecha) VALUES (1, 3, 4, '2023-05-17 10:30:00');
-INSERT INTO detalle_venta (venta_id, cantidad, producto_id, fecha) VALUES (1, 4, 5, '2023-05-17 10:30:00');
-INSERT INTO detalle_venta (venta_id, cantidad, producto_id, fecha) VALUES (2, 3, 6, '2023-05-16 15:45:00');
-INSERT INTO detalle_venta (venta_id, cantidad, producto_id, fecha) VALUES (2, 2, 5, '2023-05-16 15:45:00');
-INSERT INTO detalle_venta (venta_id, cantidad, producto_id, fecha) VALUES (2, 1, 9, '2023-05-16 15:45:00');
-INSERT INTO detalle_venta (venta_id, cantidad, producto_id, fecha) VALUES (2, 6, 8, '2023-05-16 15:45:00');
+INSERT INTO detalle_venta (venta_id, cantidad, producto_id, created_at) VALUES (1, 3, 1, '2023-05-17 10:30:00');
+INSERT INTO detalle_venta (venta_id, cantidad, producto_id, created_at) VALUES (1, 2, 2, '2023-05-17 10:30:00');
+INSERT INTO detalle_venta (venta_id, cantidad, producto_id, created_at) VALUES (1, 7, 3, '2023-05-17 10:30:00');
+INSERT INTO detalle_venta (venta_id, cantidad, producto_id, created_at) VALUES (1, 3, 4, '2023-05-17 10:30:00');
+INSERT INTO detalle_venta (venta_id, cantidad, producto_id, created_at) VALUES (1, 4, 5, '2023-05-17 10:30:00');
+INSERT INTO detalle_venta (venta_id, cantidad, producto_id, created_at) VALUES (2, 3, 6, '2023-05-16 15:45:00');
+INSERT INTO detalle_venta (venta_id, cantidad, producto_id, created_at) VALUES (2, 2, 5, '2023-05-16 15:45:00');
+INSERT INTO detalle_venta (venta_id, cantidad, producto_id, created_at) VALUES (2, 1, 9, '2023-05-16 15:45:00');
+INSERT INTO detalle_venta (venta_id, cantidad, producto_id, created_at) VALUES (2, 6, 8, '2023-05-16 15:45:00');
