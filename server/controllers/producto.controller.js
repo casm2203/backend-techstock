@@ -15,6 +15,19 @@ export const getProductos = async (req, res) => {
   }
 };
 
+//Obtener productos escasos
+export const getProductosEscasos = async (req, res) => {
+  try {
+    const [result] = await pool.query(
+      "SELECT nombre, cantidad FROM productos Where deleted = 0 and cantidad < 15 ORDER BY cantidad ASC"
+    );
+
+    res.json({ result });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 //Obtener un Producto
 export const getSearchProducto = async (req, res) => {
   try {

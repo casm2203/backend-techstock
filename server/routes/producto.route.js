@@ -3,6 +3,7 @@ import {
   getProducto,
   getProductos,
   getSearchProducto,
+  getProductosEscasos,
   addProducto,
   updateProducto,
   deleteProducto,
@@ -14,6 +15,8 @@ import { requireToken } from "../middlewares/requireToken.js";
 const router = Router();
 
 router.get("/producto", getProductos);
+
+router.get("/productosEscasos", getProductosEscasos);
 
 router.get("/producto/:id", requireToken, getProducto);
 
