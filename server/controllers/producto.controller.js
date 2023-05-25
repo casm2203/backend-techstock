@@ -1,6 +1,7 @@
 import { pool } from "../database/db.js";
 import moment from "moment";
-const fechaColombia = moment().format("YYYY-MM-DD HH:mm:ss");
+import 'moment-timezone';
+const fechaColombia = moment().tz('America/Bogota').format("YYYY-MM-DD HH:mm:ss");
 
 //Obtener todos los productos
 export const getProductos = async (req, res) => {
