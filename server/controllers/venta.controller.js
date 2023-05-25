@@ -1,9 +1,11 @@
 import { pool } from "../database/db.js";
 import moment from "moment";
-let week_from = moment().startOf("week").format("YYYY-MM-DD");
-let week_to = moment().endOf("week").format("YYYY-MM-DD");
-let day_from = moment().startOf("day").format("YYYY-MM-DD HH:mm:ss");
-let day_to = moment().endOf("day").format("YYYY-MM-DD HH:mm:ss");
+import 'moment-timezone';
+
+let week_from = moment().tz('America/Bogota').startOf("week").format("YYYY-MM-DD");
+let week_to = moment().tz('America/Bogota').endOf("week").format("YYYY-MM-DD");
+let day_from = moment().tz('America/Bogota').startOf("day").format("YYYY-MM-DD HH:mm:ss");
+let day_to = moment().tz('America/Bogota').endOf("day").format("YYYY-MM-DD HH:mm:ss");
 
 //Obtener todos los ventas diarias
 export const getVentasDashboardDay = async (req, res) => {
@@ -116,9 +118,8 @@ export const getVenta = async (req, res) => {
 export const addVenta = async (req, res) => {
   try {
     // Configurar la zona horaria de Colombia
-    const fechaColombia = moment().format("YYYY-MM-DD HH:mm:ss");
+    const fechaColombia = moment().tz('America/Bogota').format("YYYY-MM-DD HH:mm:ss");
 
-    console.log(fechaColombia);
     const { total, productos } = req.body;
 
     const [result] = await pool.query(
