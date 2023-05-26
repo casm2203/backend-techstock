@@ -7,13 +7,8 @@ let week_from = moment()
   .startOf("week")
   .format("YYYY-MM-DD");
 let week_to = moment().tz("America/Bogota").endOf("week").format("YYYY-MM-DD");
-let day_from = moment()
+const fechaColombia = moment()
   .tz("America/Bogota")
-  .startOf("day")
-  .format("YYYY-MM-DD HH:mm:ss");
-let day_to = moment()
-  .tz("America/Bogota")
-  .endOf("day")
   .format("YYYY-MM-DD HH:mm:ss");
 
 //Obtener todos los ventas diarias
@@ -22,11 +17,11 @@ export const getVentasDashboardDay = async (req, res) => {
     const [result] = await pool.query(
       `SELECT DATE(created_at) AS fecha_venta, SUM(total_venta) AS total_ventas
       FROM ventas
-      WHERE created_at BETWEEN '${day_from}' and '${day_to}' 
+      WHERE created_at BETWEEN DATE(CONVERT_TZ(NOW(), 'UTC', 'America/Bogota')) AND DATE_ADD(DATE(CONVERT_TZ(NOW(), 'UTC', 'America/Bogota')), INTERVAL 1 DAY)
       GROUP BY DATE(created_at)`
     );
 
-    res.json({ result: result[0], day_to, day_from });
+    res.json({ result: result[0]});
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -130,10 +125,6 @@ export const getVenta = async (req, res) => {
 //Crear una Venta
 export const addVenta = async (req, res) => {
   try {
-    // Configurar la zona horaria de Colombia
-    const fechaColombia = moment()
-      .tz("America/Bogota")
-      .format("YYYY-MM-DD HH:mm:ss");
 
     const { total, productos } = req.body;
 
