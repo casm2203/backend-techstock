@@ -111,7 +111,7 @@ export const getHistoryVentas = async (req, res) => {
       });
     }
 
-    res.status(200).json({ historialVentasOrdenado });
+    res.status(200).json({ historialVentas: historialVentasOrdenado });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
