@@ -17,7 +17,7 @@ export const getVentasDashboardDay = async (req, res) => {
       GROUP BY DATE(created_at)`
     );
 
-    res.json(result[0], day_from, day_to);
+    res.json({result: result[0] , day_to,day_from});
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -30,9 +30,8 @@ export const getVentasDashboardWeek = async (req, res) => {
       `SELECT DATE(created_at) AS fecha_venta, SUM(total_venta) AS total_ventas
       FROM ventas
       WHERE created_at BETWEEN '${week_from}' and '${week_to}' 
-      
-      GROUP BY DATE(created_at)
-      `
+      ORDER BY fecha_venta asc
+      GROUP BY DATE(created_at)`
     );
 
     res.json({ result });
