@@ -1,11 +1,20 @@
 import { pool } from "../database/db.js";
 import moment from "moment";
-import 'moment-timezone';
+import "moment-timezone";
 
-let week_from = moment().tz('America/Bogota').startOf("week").format("YYYY-MM-DD");
-let week_to = moment().tz('America/Bogota').endOf("week").format("YYYY-MM-DD");
-let day_from = moment().tz('America/Bogota').startOf("day").format("YYYY-MM-DD HH:mm:ss");
-let day_to = moment().tz('America/Bogota').endOf("day").format("YYYY-MM-DD HH:mm:ss");
+let week_from = moment()
+  .tz("America/Bogota")
+  .startOf("week")
+  .format("YYYY-MM-DD");
+let week_to = moment().tz("America/Bogota").endOf("week").format("YYYY-MM-DD");
+let day_from = moment()
+  .tz("America/Bogota")
+  .startOf("day")
+  .format("YYYY-MM-DD HH:mm:ss");
+let day_to = moment()
+  .tz("America/Bogota")
+  .endOf("day")
+  .format("YYYY-MM-DD HH:mm:ss");
 
 //Obtener todos los ventas diarias
 export const getVentasDashboardDay = async (req, res) => {
@@ -17,7 +26,7 @@ export const getVentasDashboardDay = async (req, res) => {
       GROUP BY DATE(created_at)`
     );
 
-    res.json({result: result[0] , day_to,day_from});
+    res.json({ result: result[0], day_to, day_from });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -30,8 +39,8 @@ export const getVentasDashboardWeek = async (req, res) => {
       `SELECT DATE(created_at) AS fecha_venta, SUM(total_venta) AS total_ventas
       FROM ventas
       WHERE created_at BETWEEN '${week_from}' and '${week_to}' 
-      ORDER BY fecha_venta asc
-      GROUP BY DATE(created_at)`
+      GROUP BY DATE(created_at)
+      ORDER BY fecha_venta asc`
     );
 
     res.json({ result });
@@ -62,7 +71,9 @@ export const getHistoryVentas = async (req, res) => {
       `SELECT * FROM ventas ORDER BY created_at ASC`
     );
 
-    if (ventasRows.length === 0) { return res.status(404).json({ Error: "No hay ventas" }) };
+    if (ventasRows.length === 0) {
+      return res.status(404).json({ Error: "No hay ventas" });
+    }
 
     const historialVentas = [];
 
@@ -71,11 +82,13 @@ export const getHistoryVentas = async (req, res) => {
         id: ventaRow.id,
         created_at: ventaRow.created_at,
         total_venta: ventaRow.total_venta,
-        detalles: []
+        detalles: [],
       };
 
       // Consultar los detalles de la venta desde la tabla "detalle_venta"
-      const [detallesRows] = await pool.query(`SELECT detalle_venta.producto_id, detalle_venta.cantidad, productos.nombre, productos.url_img, productos.precio FROM detalle_venta inner join productos on productos.id = detalle_venta.producto_id WHERE venta_id = ${venta.id}`);
+      const [detallesRows] = await pool.query(
+        `SELECT detalle_venta.producto_id, detalle_venta.cantidad, productos.nombre, productos.url_img, productos.precio FROM detalle_venta inner join productos on productos.id = detalle_venta.producto_id WHERE venta_id = ${venta.id}`
+      );
 
       // Agregar cada detalle de la venta al array de detalles
       for (const detalleRow of detallesRows) {
@@ -93,8 +106,7 @@ export const getHistoryVentas = async (req, res) => {
       historialVentas.push(venta);
     }
 
-
-    res.status(200).json({historialVentas});
+    res.status(200).json({ historialVentas });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -119,7 +131,9 @@ export const getVenta = async (req, res) => {
 export const addVenta = async (req, res) => {
   try {
     // Configurar la zona horaria de Colombia
-    const fechaColombia = moment().tz('America/Bogota').format("YYYY-MM-DD HH:mm:ss");
+    const fechaColombia = moment()
+      .tz("America/Bogota")
+      .format("YYYY-MM-DD HH:mm:ss");
 
     const { total, productos } = req.body;
 
