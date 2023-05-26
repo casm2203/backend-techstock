@@ -102,10 +102,10 @@ export const getHistoryVentas = async (req, res) => {
       historialVentas.push(venta);
       historialVentasOrdenado = historialVentas.sort( (a, b) => {
         if(a.id < b.id) {
-          return -1;
+          return 1;
         }
         if(a.id > b.id) {
-          return 1;
+          return -1;
         }
         return 0;
       });
