@@ -63,7 +63,7 @@ export const getSearchVenta = async (req, res) => {
 export const getHistoryVentas = async (req, res) => {
   try {
     const [ventasRows] = await pool.query(
-      `SELECT * FROM ventas ORDER BY created_at ASC`
+      `SELECT * FROM ventas ORDER BY id desc`
     );
 
     if (ventasRows.length === 0) {
