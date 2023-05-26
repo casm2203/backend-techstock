@@ -71,6 +71,7 @@ export const getHistoryVentas = async (req, res) => {
     }
 
     const historialVentas = [];
+    let historialVentasOrdenado =[];
 
     for (const ventaRow of ventasRows) {
       const venta = {
@@ -99,9 +100,18 @@ export const getHistoryVentas = async (req, res) => {
       }
 
       historialVentas.push(venta);
+      historialVentasOrdenado = historialVentas.sort( (a, b) => {
+        if(a.id < b.id) {
+          return -1;
+        }
+        if(a.id > b.id) {
+          return 1;
+        }
+        return 0;
+      });
     }
 
-    res.status(200).json({ historialVentas });
+    res.status(200).json({ historialVentasOrdenado });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
