@@ -139,8 +139,8 @@ export const addVenta = async (req, res) => {
     const { total, productos } = req.body;
 
     const [result] = await pool.query(
-      "INSERT INTO ventas (total_venta, created_at) VALUES (?,?)",
-      [total, fechaColombia]
+      "INSERT INTO ventas (total_venta, created_at) VALUES (?,DATE_FORMAT(CONVERT_TZ(NOW(), 'UTC', 'America/Bogota'), '%Y-%m-%d %H:%i:%s'))",
+      [total]
     );
 
     let idVenta = result.insertId;
