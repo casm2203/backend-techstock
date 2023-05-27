@@ -150,8 +150,8 @@ export const addVenta = async (req, res) => {
 
       //Insertar detalle de venta
       const [detalleVenta] = await pool.query(
-        "INSERT INTO detalle_venta(venta_id, producto_id, cantidad, created_at) VALUES (?,?,?,?)",
-        [idVenta, id, cantidad, fechaColombia]
+        "INSERT INTO detalle_venta(venta_id, producto_id, cantidad, created_at) VALUES (?,?,?,DATE_FORMAT(CONVERT_TZ(NOW(), 'UTC', 'America/Bogota'), '%Y-%m-%d %H:%i:%s'))",
+        [idVenta, id, cantidad]
       );
 
       //Actualizar cantidad del producto en la tabla de productos
@@ -161,7 +161,7 @@ export const addVenta = async (req, res) => {
       );
     }
 
-    res.status(200).json({ idVenta, message: "Venta registrada con exito." });
+    res.status(200).json({ idVenta, message: "Venta registrada con exito.", fechaColombia });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
