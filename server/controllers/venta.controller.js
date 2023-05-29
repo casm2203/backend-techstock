@@ -33,7 +33,7 @@ export const getVentasDashboardWeek = async (req, res) => {
     const [result] = await pool.query(
       `SELECT DATE(created_at) AS fecha_venta, SUM(total_venta) AS total_ventas
       FROM ventas
-      WHERE created_at BETWEEN '${week_from}' and '${week_to}' 
+      WHERE created_at BETWEEN DATE_SUB(DATE(CONVERT_TZ(NOW(), 'UTC', 'America/Bogota')), INTERVAL 3 DAY) AND DATE_ADD(DATE(CONVERT_TZ(NOW(), 'UTC', 'America/Bogota')), INTERVAL 3 DAY) 
       GROUP BY DATE(created_at)
       ORDER BY fecha_venta asc`
     );
